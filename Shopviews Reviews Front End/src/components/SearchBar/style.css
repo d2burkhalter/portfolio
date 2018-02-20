@@ -1,0 +1,20 @@
+.Search-Container {
+  width: 90%;
+}
+.Search-Row {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.Search-Label {
+  padding-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+  font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #004A4A;
+  align-self: center;
+  letter-spacing: 0.07em;
+}

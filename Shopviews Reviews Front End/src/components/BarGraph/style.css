@@ -1,0 +1,60 @@
+.BarGraph-Container {
+  flex-grow: 2;
+  padding-left: 10px;
+  width: 19em;
+}
+.BarRow-Container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+.BarGraph-Title {
+  text-align: left;
+  font-weight: bold;
+  color: #27b6b6;
+}
+.BarRow-Title {
+  font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 80px;
+  font-size: 13px;
+  display: table;
+  padding: 0px;
+  text-align: left;
+  align-self: center;
+  color: #434343;
+}
+
+.BarRow-Number {
+  font-family: sans-serif;
+  max-width: 80px;
+  font-size: 13px;
+  display: table;
+  margin-left: 5px;
+  text-align:left;
+  align-self: center;
+  color: #434343;
+}
+
+.BarContainer {
+  display: table;
+  width: 60%;
+  margin-left: 7px;
+}
+.horizontal {
+  border: 1px solid #bbbbbb;
+}
+.horizontal .ProgressBar {
+  height: 1em;
+  width: 100%;
+  padding: 12px 0;
+}
+.horizontal .ProgressTrack {
+  width: 100%;
+  height: 1em;
+  background: #fbfbfb;
+  border: 1px black;
+}
+.horizontal .ProgressFill {
+  background: #27b6b6;
+  height: 1em;
+}

@@ -1,0 +1,156 @@
+---
+title: "Final Project: King County Data Analysis"
+author: "By David Burkhalter, Juhi Pathak, Chris Duncan, Duy Pham, Vinyou Tamprateep"
+resource_files:
+- .Renviron
+output:
+  html_notebook:
+    code_folding: hide
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+runtime: shiny
+---
+
+## **Intro (data.world, shinyapps)**
+We will be analyzing house sales data for King County, Washington using various statistiscal techniques to find interesting insights. This notebook will contain exerpts of our work.
+
+Our data.world project page and all our insights are found at the following:
+https://data.world/chrisduncan/f-17-eda-project-5
+
+Our Shiny app:
+https://duyp.shinyapps.io/finalproject/
+
+```{r setup, include=FALSE}
+library(cluster)
+library(data.world)
+library(DT)
+library(e1071)
+library(gbm)
+library(ggplot2)
+library(leaps)
+library(MASS)
+library(randomForest)
+library(tidyverse)
+library(tree)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **R Session Info**  
+```{r}
+sessionInfo()
+```
+
+## **Connecting to data.world**
+```{r}
+data.world::set_config(cfg_env("DW_API"))
+project <- "https://data.world/chrisduncan/housing-data-for-king-county-usa"
+df <- data.world::query(
+  data.world::qry_sql("SELECT * FROM kc_house_data"),
+  dataset = project
+)
+table = df
+```
+
+### A Sample of the Data
+```{r}
+h = head(table)
+DT::renderDataTable(h, options = list(scrollX = TRUE))
+```
+
+## **Interesting Findings**
+* Latitude is often top predictor over housing characteristics such as grade and square feet of housing space.
+* Houses beyond the latitude of 47.5 broke the barrier for what we'd cluster as pricier homes. Homes in the cluster of 47.5 and 47.7 had the highest house values. These were houses between Lake Sammamish and Seattle.
+
+## Zip code influence
+We have found a of relationship between the latitude and longitude and price so we know that location is very important predictor for price. I want to see how each zip code influence the price of a house.
+```{ include = FALSE}
+fit=lm(price~bedrooms+bathrooms+sqft_living+view+condition+grade+yr_built,daviddf)
+#add predicted price based on model to table
+daviddf$price_pred = predict(fit,daviddf)
+#finds percent difference between the actual price and the predicted price
+daviddf$percentdiff <-((daviddf$price-daviddf$price_pred)/daviddf$price)
+```
+Now that we have the percent difference that each house is from it's predicted value we will group by zip code and see the average percent difference for each. I decided to classify the influence by if the percent difference was greater than stadard deviation for all of the percnet differences.
+```{r}
+#groups by zipcode and finds the average of the percent difference for each
+agg = aggregate(percentdiff~zipcode,daviddf, mean)
+#find average of all percent differences
+avgPerDiff=apply(agg,2,mean)[2]
+#find standard devation of percent differences
+sdPerDiff=apply(agg,2,sd)[2]
+#add category based on if zipcode influence is above within or below a the standard deviation
+agg$influence<-ifelse(agg$percentdiff>=avgPerDiff+sdPerDiff,"Very Positive",ifelse(agg$percentdiff>=0,"Positive",ifelse(agg$percentdiff>=avgPerDiff-sdPerDiff, "Negative","Very Negative")))
+ggplot(agg,aes(x=zipcode,y=percentdiff, color=influence))+geom_point()
+```
+This information is hard to process so we should attach the influence of each zipcode to our original dataset and plot the points by their longitude and lattitude.
+```{r}
+#ran loop ahead of time because it takes so long
+#daviddf <- sample_n(daviddf,nrow(daviddf)/10)
+#daviddf$influence<-"test"
+#for (i in 1:nrow(plotdaviddf)){
+#  #find the zipcode and add its influence
+#  for (j in 1:nrow(agg)) {
+#    if(daviddf[i,"zipcode"]==agg[j,"zipcode"]) {
+#      daviddf[i,"influence"]=agg[j,"influence"]
+#    }
+#  }
+#}
+#ggplot(daviddf,aes(x=long,y=lat,color=influence))+geom_point()+geom_hline(yintercept=47.6)+geom_vline(xintercept=-122.3)
+```
+
+<p><img src="https://view.dwcontent.com/file_view/burkie574/finalprojectdata/Screenshot%20(23).png"/></p>
+
+## **Interesting Findings**
+From this we can see that near the center of Seattle the houses are worth which is what we expect. If we could get more refined data about neighboorhoods we could find smaller boundaries but from just the zipcode we are able to find an interesting insight.
+
+We want to predict which houses are of an above average value and support vector machines allow for classification prediction. I added a column to the dataset for if the house was greater than the average value for a house.
+```{r}
+avgmonthly=mean(table$price)
+table$high=ifelse(table$price<=avgmonthly,FALSE,TRUE)
+xi=data.frame(subset(table,select=c("yr_built","grade","high")))
+ggplot(table,aes(x=grade,y=yr_built, color=high))+geom_point()
+```
+From this graph we can see that the high value houses have high grades and that older houses can be of a higher value with a lower grade. These groups can be separated using a support vector machine
+```{r}
+train=sample(1:nrow(xi),nrow(xi)/2)
+svmlin=svm(high~.,data=xi,kernel="linear",scale=FALSE,type="C",subset=train)
+plot(svmlin,xi)
+svmlin.pred=predict(svmlin,xi[-train,],type="class")
+svmlintable = with(xi[-train,],table(svmlin.pred,high))
+svmlintable
+linpredrate=((svmlintable[1]+svmlintable[4])/sum(svmlintable))
+```
+The support vector machine with a linear kernel was able to predict the correct class `r linpredrate` of the time. Now we will see if the radial kernel can provide a better prediction rate.
+```{r}
+fit=svm(high~.,data=xi,scale=FALSE,kernel="radial",type="C",subset=train)
+plot(fit,xi)
+svmrad.pred=predict(fit,xi[-train,],type="class")
+svmradtable = with(xi[-train,],table(svmrad.pred,high))
+svmradtable
+radpredrate=((svmradtable[1]+svmradtable[4])/sum(svmradtable))
+```
+The support vector machine with a radial kernel was able to predict the correct class `r radpredrate` of the time.
+
+## **Interesting Findings**
+With support vector machines we can see that machine learning can be used to classify data. Next we'll try TensorFlow and deep neural networks to see if we can get more accurate predictions.
+
+Using the same testing and training set that I made earlier for the linear classifier I made a deep neural network with 4 hidden layers of size 100, 75,50 and 25. I used the same features as the linear classifier to make the deep neural network and ran it for the same amount of steps.
+
+<p><img src="https://view.dwcontent.com/file_view/burkie574/finalprojectdata/deep%20(2).png"/></p>
+
+The neural network seems to start and end at around the same 77.6% accuracy but it does seems to vary less over time.
+
+TensorFlow also allows for a combination of deep neural networks and linear classifier so I ran that on with the same features as before.
+
+<p><img src="https://view.dwcontent.com/file_view/burkie574/finalprojectdata/deep_wide%20(2).png"/></p>
+
+The combination model is better than the deep neural network but not as good as the linear classifier. I decided to run the combination model for a long time to see how much it could improve.
+
+
+<p><img src="https://view.dwcontent.com/file_view/burkie574/finalprojectdata/longTime.png"/></p>
+
+After running the model for 5 times as long it tops out at 85% accuracy.
+
+## **Interesting Findings**
+By using TensorFlow we can apply a lot of interesting machine learning to our data. The linear classifier was more accurate than the support vector machine and the deep neural network was not as accurate as the support vector machine.

@@ -1,0 +1,2 @@
+select count(*) from title_tags
+200380

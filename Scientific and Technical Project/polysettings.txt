@@ -1,0 +1,4 @@
+power1 5
+power2 10
+power3 15
+power4 20

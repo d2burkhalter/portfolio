@@ -1,0 +1,72 @@
+Explain analyze SELECT * FROM title_basics tb WHERE tb.start_year = 2011 AND UPPER(tb.primary_title)='THOR';
+//Base result
+QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------------
+Seq Scan on title_basics tb  (cost=0.00..132553.34 rows=1039 width=72) (actual time=725.814..4276.491 rows=8 loops=1)
+Filter: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text))
+Rows Removed by Filter: 4486297
+Planning time: 0.086 ms
+Execution time: 4276.530 ms
+(5 rows)
+//after base_query_idx
+QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------------
+Index Scan using base_query_idx on title_basics tb  (cost=0.56..3403.34 rows=1039 width=72) (actual time=1.033..1.045 rows=8 loops=1)
+Index Cond: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text))
+Planning time: 1.003 ms
+Execution time: 1.081 ms
+(4 rows)
+
+EXPLAIN analyze SELECT * FROM title_basics tb WHERE tb.start_year = 2011 AND UPPER(tb.primary_title)='THOR' AND tb.title_type='movie';
+//base results
+QUERY PLAN
+----------------------------------------------------------------------------------------------------------------------------
+Seq Scan on title_basics tb  (cost=0.00..143769.10 rows=105 width=72) (actual time=2421.714..4212.762 rows=1 loops=1)
+Filter: ((start_year = 2011) AND ((title_type)::text = 'movie'::text) AND (upper((primary_title)::text) = 'THOR'::text))
+Rows Removed by Filter: 4486304
+Planning time: 0.095 ms
+Execution time: 4212.791 ms
+(5 rows)
+//after noTV_idx
+QUERY PLAN
+--------------------------------------------------------------------------------------------------------------------------------
+Index Scan using notv_idx on title_basics tb  (cost=0.56..349.87 rows=105 width=72) (actual time=0.756..0.757 rows=1 loops=1)
+Index Cond: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text) AND ((title_type)::text = 'movie'::text))
+Planning time: 0.327 ms
+Execution time: 0.793 ms
+(4 rows)
+//after notv2_idx
+QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------
+Index Scan using notv2_idx on title_basics tb  (cost=0.43..1161.15 rows=105 width=72) (actual time=0.051..0.052 rows=1 loops=1)
+Index Cond: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text))
+Filter: ((title_type)::text = 'movie'::text)
+Planning time: 3.535 ms
+Execution time: 0.587 ms
+
+EXPLAIN analyze SELECT * FROM title_basics tb JOIN title_genres tg ON tb.title_id = tg.title_id WHERE tb.start_year = 2011 AND UPPER(tb.primary_title) = 'THOR' AND tg.genre='Action';
+//base results
+QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Nested Loop  (cost=0.43..141237.88 rows=43 width=90) (actual time=2434.635..4304.952 rows=1 loops=1)
+->  Seq Scan on title_basics tb  (cost=0.00..132553.34 rows=1039 width=72) (actual time=728.541..4304.646 rows=8 loops=1)
+Filter: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text))
+Rows Removed by Filter: 4486297
+->  Index Only Scan using title_genres_pkey on title_genres tg  (cost=0.43..8.35 rows=1 width=18) (actual time=0.029..0.029 rows=0 loops=8)
+Index Cond: ((title_id = tb.title_id) AND (genre = 'Action'::text))
+Heap Fetches: 1
+Planning time: 3.219 ms
+Execution time: 4304.993 ms
+(9 rows)
+//after genre_search_idx
+QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Nested Loop  (cost=0.99..12087.87 rows=43 width=90) (actual time=0.061..0.189 rows=1 loops=1)
+->  Index Scan using base_query_idx on title_basics tb  (cost=0.56..3403.34 rows=1039 width=72) (actual time=0.022..0.033 rows=8 loops=1)
+Index Cond: ((start_year = 2011) AND (upper((primary_title)::text) = 'THOR'::text))
+->  Index Only Scan using title_genres_pkey on title_genres tg  (cost=0.43..8.35 rows=1 width=18) (actual time=0.017..0.017 rows=0 loops=8)
+Index Cond: ((title_id = tb.title_id) AND (genre = 'Action'::text))
+Heap Fetches: 1
+Planning time: 1.559 ms
+Execution time: 0.231 ms
+(8 rows)

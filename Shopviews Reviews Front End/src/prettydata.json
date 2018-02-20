@@ -1,0 +1,351 @@
+{
+  "fitData":{
+    "total":10,
+    "fitArray":[
+      7,
+      2,
+      1
+    ]
+  },
+  "satisfactionData":{
+    "satisfied":8,
+    "unsatisfied":2,
+    "percentage":80
+  },
+  "reviews":[
+    {
+      "id":0,
+      "index":0,
+      "fit":0,
+      "bioInfo":{
+        "name":"Sylvia",
+        "bioArray":[
+          [
+            "AGE",
+            32
+          ],
+          [
+            "HEIGHT",
+            "5'9\""
+          ],
+          [
+            "WEIGHT",
+            132
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"January 5 2044",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "I so I it awesome cute loved loved awesome much I so thing ever cute "
+          ]
+        ]
+      }
+    },
+    {
+      "id":1,
+      "index":1,
+      "fit":2,
+      "bioInfo":{
+        "name":"Ben",
+        "bioArray":[
+          [
+            "HEIGHT",
+            "6'8\""
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"August 24 2075",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Funeral"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "awesome favorite favorite it cute ever loved so cute I awesome it "
+          ]
+        ]
+      }
+    },
+    {
+      "id":2,
+      "index":2,
+      "fit":0,
+      "bioInfo":{
+        "name":"Ben",
+        "bioArray":[
+          [
+            "SIZE WORN",
+            10
+          ],
+          [
+            "AGE",
+            24
+          ],
+          [
+            "HEIGHT",
+            "5'2\""
+          ],
+          [
+            "WEIGHT",
+            173
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"June 8 2093",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Formal"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "awesome favorite cute loved I I it cute so awesome "
+          ]
+        ]
+      }
+    },
+    {
+      "id":3,
+      "index":3,
+      "fit":0,
+      "bioInfo":{
+        "name":"Hyeong",
+        "bioArray":[
+          [
+            "AGE",
+            43
+          ],
+          [
+            "HEIGHT",
+            "6'10\""
+          ],
+          [
+            "WEIGHT",
+            185
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=gif",
+      "reviewInfo":{
+        "date":"August 26 2033",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Prom"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "so I cute favorite ever favorite so loved I much I "
+          ]
+        ]
+      }
+    },
+    {
+      "id":4,
+      "index":4,
+      "fit":0,
+      "bioInfo":{
+        "name":"Hyeong",
+        "bioArray":[
+          [
+            "HEIGHT",
+            "6'3\""
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=gif",
+      "reviewInfo":{
+        "date":"June 26 1960",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Nudist Colony"
+          ]
+        ]
+      }
+    },
+    {
+      "id":5,
+      "index":5,
+      "fit":0,
+      "bioInfo":{
+        "name":"Nathalie",
+        "bioArray":[
+          [
+            "SIZE WORN",
+            15
+          ],
+          [
+            "HEIGHT",
+            "6'4\""
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"December 6 2038",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Funeral"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "I favorite so favorite favorite ever favorite it much thing much "
+          ]
+        ]
+      }
+    },
+    {
+      "id":6,
+      "index":6,
+      "fit":1,
+      "bioInfo":{
+        "name":"Jack",
+        "bioArray":[
+          [
+            "SIZE WORN",
+            0
+          ],
+          [
+            "AGE",
+            17
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=gif",
+      "reviewInfo":{
+        "date":"December 21 1962",
+        "liked":false,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Formal"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "it so thing awesome thing thing so favorite awesome ever favorite "
+          ]
+        ]
+      }
+    },
+    {
+      "id":7,
+      "index":7,
+      "fit":0,
+      "bioInfo":{
+        "name":"Nathalie",
+        "bioArray":[
+          [
+            "HEIGHT",
+            "6'9\""
+          ],
+          [
+            "WEIGHT",
+            109
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"July 1 2095",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Formal"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "I thing thing much it it ever so cute favorite thing it so it "
+          ]
+        ]
+      }
+    },
+    {
+      "id":8,
+      "index":8,
+      "fit":1,
+      "bioInfo":{
+        "name":"Jack",
+        "bioArray":[
+          [
+            "SIZE WORN",
+            0
+          ],
+          [
+            "AGE",
+            27
+          ],
+          [
+            "WEIGHT",
+            200
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=gif",
+      "reviewInfo":{
+        "date":"October 22 1945",
+        "liked":false,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Formal"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "awesome it thing so so awesome much it I thing I loved it thing "
+          ]
+        ]
+      }
+    },
+    {
+      "id":9,
+      "index":9,
+      "fit":0,
+      "bioInfo":{
+        "name":"Jack",
+        "bioArray":[
+          [
+            "SIZE WORN",
+            7
+          ],
+          [
+            "WEIGHT",
+            180
+          ]
+        ]
+      },
+      "pictureURL":"http://thecatapi.com/api/images/get?format=src&type=png",
+      "reviewInfo":{
+        "date":"October 29 2032",
+        "liked":true,
+        "reviewArray":[
+          [
+            "WHERE DID YOU WEAR IT?",
+            "Birthday"
+          ],
+          [
+            "WHAT DID YOU THINK ABOUT IT?",
+            "favorite I loved I it ever so ever thing much much "
+          ]
+        ]
+      }
+    }
+  ]
+}

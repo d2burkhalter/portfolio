@@ -1,0 +1,10 @@
+.TopBar-Container {
+  width: 100%;
+}
+.TopBar-Row {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 5px;
+}

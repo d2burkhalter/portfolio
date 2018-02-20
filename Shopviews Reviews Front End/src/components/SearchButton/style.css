@@ -1,0 +1,22 @@
+.SearchButton-Container {
+  width: 5em;
+  height: 2em;
+  border: 1px solid black;
+  border-radius: 1em;
+  display: flex;
+}
+.SearchButton-text {
+  text-align: center;
+  width: 70%;
+  font-size: 0.9em;
+  line-height: 2em;
+}
+.SearchButton-iconContainer {
+  width: 30%;
+}
+.SearchButton-icon {
+  margin: auto;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid black;
+}

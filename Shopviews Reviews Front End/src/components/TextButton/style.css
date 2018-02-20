@@ -1,0 +1,7 @@
+.TextButton {
+  width: 12vw;
+  height: 2em;
+  padding-left: 4px;
+  border: 1px solid black;
+  display: flex;
+}
