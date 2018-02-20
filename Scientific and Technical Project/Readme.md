@@ -10,5 +10,4 @@ For the polynomial regression I made a function polyRegression.C
 that reads the CSV file AirQualityUCI.csv and finds the coeffiecients
 to a polynomial to model the data. The direct method writes the coefficients
 it finds for a given power to the file directN.txt where N is the power. The
-data is graphed by the function makeplot.py. I was unable to get an iterative
-solver to work after trying both gsl_mutimin and petsc KSP. 
+data is graphed by the function makeplot.py.
